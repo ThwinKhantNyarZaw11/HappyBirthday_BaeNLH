@@ -1,0 +1,111 @@
+@import "tailwindcss";
+
+/* ============================================================
+   ROMANTIC BIRTHDAY THEME - Custom CSS
+   Color palette: deep purple, soft pink, warm rose, gold accents
+   ============================================================ */
+
+@theme {
+  /* Romantic color palette */
+  --color-rose-glow: #ff6b9d;
+  --color-blush: #f8a4c8;
+  --color-lavender: #c084fc;
+  --color-deep-purple: #1a0a2e;
+  --color-midnight: #0d0618;
+  --color-gold: #fbbf24;
+  --color-gold-soft: #f5d280;
+  --color-warm-white: #fef3f2;
+  --color-soft-pink: #fce7f3;
+
+  /* Custom fonts */
+  --font-display: "Playfair Display", Georgia, serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-script: "Dancing Script", cursive;
+
+  /* Custom animations */
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-glow: glow-pulse 2s ease-in-out infinite;
+  --animate-flicker: flicker 0.3s ease-in-out infinite;
+  --animate-sparkle: sparkle 1.5s ease-in-out infinite;
+  --animate-heartbeat: heartbeat 1.5s ease-in-out infinite;
+}
+
+/* Keyframe animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33% { transform: translateY(-15px) rotate(2deg); }
+  66% { transform: translateY(-8px) rotate(-1deg); }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.6; filter: blur(20px); }
+  50% { opacity: 1; filter: blur(25px); }
+}
+
+@keyframes flicker {
+  0%, 100% { opacity: 1; transform: scaleY(1) scaleX(1); }
+  25% { opacity: 0.85; transform: scaleY(0.97) scaleX(1.01); }
+  50% { opacity: 0.95; transform: scaleY(1.02) scaleX(0.98); }
+  75% { opacity: 0.88; transform: scaleY(0.99) scaleX(1.02); }
+}
+
+@keyframes sparkle {
+  0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
+  50% { opacity: 1; transform: scale(1) rotate(180deg); }
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  14% { transform: scale(1.15); }
+  28% { transform: scale(1); }
+  42% { transform: scale(1.1); }
+  56% { transform: scale(1); }
+}
+
+@keyframes confetti-fall {
+  0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+/* Base styles */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-midnight);
+  color: var(--color-warm-white);
+  overflow-x: hidden;
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-deep-purple);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-lavender);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-rose-glow);
+}
+
+/* Selection color */
+::selection {
+  background-color: rgba(248, 164, 200, 0.3);
+  color: white;
+}
