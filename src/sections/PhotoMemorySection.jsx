@@ -43,14 +43,10 @@ export default function PhotoMemorySection() {
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#1e0533] via-deep-purple to-midnight" />
 
-      {/* Decorative glow */}
-      <motion.div
-        className="absolute top-1/3 left-1/3 w-80 h-80 bg-lavender/15 rounded-full blur-[100px]"
-        animate={{ scale: [1, 1.2, 1], opacity: [0.2, 0.35, 0.2] }}
-        transition={{ duration: 8, repeat: Infinity }}
-      />
+      {/* Decorative glow — CSS only */}
+      <div className="absolute top-1/3 left-1/3 w-64 md:w-80 h-64 md:h-80 bg-lavender/15 rounded-full blur-[60px] md:blur-[80px] animate-glow" />
 
-      <ParticleField count={15} colors={["#c084fc", "#f8a4c8", "#818cf8"]} />
+      <ParticleField count={10} colors={["#c084fc", "#f8a4c8", "#818cf8"]} />
 
       <div className="relative z-10 w-full max-w-4xl mx-auto px-6">
         {/* Section title */}

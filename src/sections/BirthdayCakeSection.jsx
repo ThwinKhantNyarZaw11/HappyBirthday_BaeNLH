@@ -106,19 +106,15 @@ export default function BirthdayCakeSection() {
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-deep-purple via-[#1a0a30] to-midnight" />
 
-      {/* Warm glow from cake */}
+      {/* Warm glow from cake — CSS only */}
       {isLit && (
-        <motion.div
-          className="absolute top-1/3 left-1/2 -translate-x-1/2 w-64 h-64 bg-gold/10 rounded-full blur-[80px]"
-          animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.5, 0.3] }}
-          transition={{ duration: 2, repeat: Infinity }}
-        />
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-48 md:w-64 h-48 md:h-64 bg-gold/10 rounded-full blur-[50px] md:blur-[70px] animate-glow" />
       )}
 
-      <ParticleField count={10} colors={["#fbbf24", "#f5d280"]} />
+      <ParticleField count={8} colors={["#fbbf24", "#f5d280"]} />
 
-      {/* Confetti on blow */}
-      <AnimatePresence>{showConfetti && <Confetti count={80} />}</AnimatePresence>
+      {/* Confetti on blow — reduced count on mobile */}
+      <AnimatePresence>{showConfetti && <Confetti count={40} />}</AnimatePresence>
 
       <div className="relative z-10 text-center px-6 max-w-lg mx-auto">
         {/* Title */}

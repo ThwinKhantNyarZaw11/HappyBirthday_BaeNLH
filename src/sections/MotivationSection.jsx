@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { MOTIVATION } from "../constants";
 import ParticleField from "../components/ParticleField";
 
@@ -13,16 +13,13 @@ function QuoteCard({ quote, index, isActive, onClick }) {
       transition={{ duration: 0.7, delay: index * 0.15 }}
       viewport={{ once: true }}
       onClick={onClick}
-      layout
     >
-      <motion.div
+      <div
         className={`relative p-6 md:p-8 rounded-2xl border transition-all duration-500 ${
           isActive
             ? "bg-gradient-to-br from-deep-purple/80 to-[#1a0a2e]/90 border-rose-glow/40 shadow-[0_0_30px_rgba(255,107,157,0.15)]"
-            : "bg-deep-purple/30 border-lavender/10 hover:border-lavender/30"
+            : "bg-deep-purple/30 border-lavender/10"
         }`}
-        whileHover={{ scale: 1.02 }}
-        layout
       >
         {/* Quote icon */}
         <motion.span
@@ -45,14 +42,11 @@ function QuoteCard({ quote, index, isActive, onClick }) {
 
         {/* Active indicator glow */}
         {isActive && (
-          <motion.div
-            className="absolute -inset-px rounded-2xl bg-gradient-to-r from-rose-glow/20 to-lavender/20 -z-10 blur-sm"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+          <div
+            className="absolute -inset-px rounded-2xl bg-gradient-to-r from-rose-glow/20 to-lavender/20 -z-10 blur-sm opacity-100 transition-opacity duration-300"
           />
         )}
-      </motion.div>
+      </div>
     </motion.div>
   );
 }
@@ -65,17 +59,9 @@ export default function MotivationSection() {
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-midnight via-deep-purple to-[#120820]" />
 
-      {/* Inspirational glow */}
-      <motion.div
-        className="absolute top-1/4 right-1/4 w-72 h-72 bg-gold/8 rounded-full blur-[100px]"
-        animate={{ scale: [1, 1.3, 1], opacity: [0.2, 0.4, 0.2] }}
-        transition={{ duration: 8, repeat: Infinity }}
-      />
-      <motion.div
-        className="absolute bottom-1/3 left-1/3 w-64 h-64 bg-lavender/10 rounded-full blur-[80px]"
-        animate={{ scale: [1.2, 1, 1.2], opacity: [0.15, 0.3, 0.15] }}
-        transition={{ duration: 10, repeat: Infinity }}
-      />
+      {/* Inspirational glow — CSS only for performance */}
+      <div className="absolute top-1/4 right-1/4 w-56 md:w-72 h-56 md:h-72 bg-gold/8 rounded-full blur-[60px] md:blur-[80px] animate-glow" />
+      <div className="absolute bottom-1/3 left-1/3 w-48 md:w-64 h-48 md:h-64 bg-lavender/10 rounded-full blur-[50px] md:blur-[70px] animate-glow" style={{ animationDelay: "3s" }} />
 
       <ParticleField count={15} colors={["#fbbf24", "#c084fc", "#818cf8"]} />
 

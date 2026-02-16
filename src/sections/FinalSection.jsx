@@ -3,39 +3,27 @@ import { motion } from "framer-motion";
 import { FINALE } from "../constants";
 import FloatingHearts from "../components/FloatingHearts";
 import ParticleField from "../components/ParticleField";
-
+import useIsMobile from "../hooks/useIsMobile";
 
 export default function FinalSection({ onReplay }) {
-  const [showFullMessage, setShowFullMessage] = useState(false);
+  const isMobile = useIsMobile();
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden py-20">
       {/* Background with special warm glow */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#120820] via-midnight to-deep-purple" />
 
-      {/* Large warm center glow */}
-      <motion.div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full blur-[160px]"
+      {/* Large warm center glow — CSS only */}
+      <div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 md:w-[500px] h-80 md:h-[500px] rounded-full blur-[80px] md:blur-[120px] animate-glow"
         style={{
           background:
             "radial-gradient(circle, rgba(255,107,157,0.15) 0%, rgba(192,132,252,0.08) 50%, transparent 70%)",
         }}
-        animate={{
-          scale: [1, 1.1, 1],
-          opacity: [0.6, 1, 0.6],
-        }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
       />
 
-      {/* Top glow */}
-      <motion.div
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-64 bg-gradient-to-b from-rose-glow/5 to-transparent"
-        animate={{ opacity: [0.3, 0.6, 0.3] }}
-        transition={{ duration: 6, repeat: Infinity }}
-      />
-
-      <ParticleField count={25} colors={["#ff6b9d", "#f8a4c8", "#c084fc", "#fbbf24"]} />
-      <FloatingHearts count={20} />
+      <ParticleField count={isMobile ? 8 : 20} colors={["#ff6b9d", "#f8a4c8", "#c084fc", "#fbbf24"]} />
+      <FloatingHearts count={isMobile ? 5 : 15} />
 
       <div className="relative z-10 text-center px-6 max-w-2xl mx-auto">
         {/* Grand heart icon */}
@@ -89,20 +77,16 @@ export default function FinalSection({ onReplay }) {
           transition={{ duration: 1, delay: 0.8 }}
           viewport={{ once: true }}
         >
-          {/* Glow border */}
-          <motion.div
-            className="absolute -inset-px rounded-3xl bg-gradient-to-r from-rose-glow/10 via-lavender/10 to-rose-glow/10 -z-10 blur-sm"
-            animate={{
-              opacity: [0.3, 0.6, 0.3],
-            }}
-            transition={{ duration: 4, repeat: Infinity }}
+          {/* Glow border — CSS animation */}
+          <div
+            className="absolute -inset-px rounded-3xl bg-gradient-to-r from-rose-glow/10 via-lavender/10 to-rose-glow/10 -z-10 blur-sm animate-glow"
           />
 
           <motion.p
             className="font-body text-lg sm:text-xl md:text-2xl text-warm-white/90 leading-relaxed md:leading-loose font-light"
-            initial={{ opacity: 0, filter: "blur(10px)" }}
-            whileInView={{ opacity: 1, filter: "blur(0px)" }}
-            transition={{ duration: 1.5, delay: 1 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.2, delay: 1 }}
             viewport={{ once: true }}
           >
             {FINALE.message}

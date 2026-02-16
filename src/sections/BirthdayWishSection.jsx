@@ -1,17 +1,18 @@
 import { motion } from "framer-motion";
 import { WISH } from "../constants";
 import ParticleField from "../components/ParticleField";
+import useIsMobile from "../hooks/useIsMobile";
 
 function Sparkle({ delay, x, y, size = 16 }) {
   return (
     <motion.svg
-      className="absolute text-gold/60 pointer-events-none"
+      className="absolute text-gold/60 pointer-events-none will-change-transform"
       style={{ left: `${x}%`, top: `${y}%` }}
       width={size}
       height={size}
       viewBox="0 0 24 24"
       fill="currentColor"
-      initial={{ opacity: 0, scale: 0, rotate: 0 }}
+      initial={{ opacity: 0, scale: 0 }}
       animate={{
         opacity: [0, 1, 0],
         scale: [0, 1, 0],
@@ -29,15 +30,16 @@ function Sparkle({ delay, x, y, size = 16 }) {
   );
 }
 
+// Individual paragraph with reveal animation (no filter:blur for performance)
 function WishParagraph({ text, index }) {
   return (
     <motion.p
       className="text-warm-white/90 text-base sm:text-lg md:text-xl leading-relaxed md:leading-loose font-body font-light mb-6 last:mb-0"
-      initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
-      whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+      initial={{ opacity: 0, y: 25 }}
+      whileInView={{ opacity: 1, y: 0 }}
       transition={{
-        duration: 1,
-        delay: index * 0.3,
+        duration: 0.8,
+        delay: index * 0.2,
         ease: "easeOut",
       }}
       viewport={{ once: true, margin: "-50px" }}
@@ -48,31 +50,36 @@ function WishParagraph({ text, index }) {
 }
 
 export default function BirthdayWishSection() {
-  // Sparkle positions (decorative)
-  const sparkles = [
-    { x: 5, y: 10, delay: 0, size: 14 },
-    { x: 90, y: 15, delay: 1.2, size: 18 },
-    { x: 15, y: 45, delay: 0.8, size: 12 },
-    { x: 85, y: 50, delay: 2, size: 16 },
-    { x: 8, y: 75, delay: 1.5, size: 20 },
-    { x: 92, y: 80, delay: 0.5, size: 14 },
-    { x: 50, y: 5, delay: 1.8, size: 16 },
-    { x: 45, y: 90, delay: 2.5, size: 12 },
-  ];
+  const isMobile = useIsMobile();
+
+  // Fewer sparkles on mobile
+  const sparkles = isMobile
+    ? [
+        { x: 5, y: 10, delay: 0, size: 14 },
+        { x: 90, y: 15, delay: 1.2, size: 16 },
+        { x: 8, y: 75, delay: 1.5, size: 18 },
+        { x: 92, y: 80, delay: 0.5, size: 14 },
+      ]
+    : [
+        { x: 5, y: 10, delay: 0, size: 14 },
+        { x: 90, y: 15, delay: 1.2, size: 18 },
+        { x: 15, y: 45, delay: 0.8, size: 12 },
+        { x: 85, y: 50, delay: 2, size: 16 },
+        { x: 8, y: 75, delay: 1.5, size: 20 },
+        { x: 92, y: 80, delay: 0.5, size: 14 },
+        { x: 50, y: 5, delay: 1.8, size: 16 },
+        { x: 45, y: 90, delay: 2.5, size: 12 },
+      ];
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden py-20">
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-midnight via-[#150826] to-deep-purple" />
 
-      {/* Decorative glow */}
-      <motion.div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-rose-glow/8 rounded-full blur-[150px]"
-        animate={{ scale: [1, 1.1, 1], opacity: [0.5, 0.8, 0.5] }}
-        transition={{ duration: 10, repeat: Infinity }}
-      />
+      {/* Decorative glow — CSS only for performance */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 md:w-[500px] h-80 md:h-[500px] bg-rose-glow/8 rounded-full blur-[80px] md:blur-[120px] animate-glow" />
 
-      <ParticleField count={12} colors={["#fbbf24", "#f5d280", "#f8a4c8"]} />
+      <ParticleField count={10} colors={["#fbbf24", "#f5d280", "#f8a4c8"]} />
 
       {/* Sparkle decorations */}
       {sparkles.map((s, i) => (
